@@ -382,28 +382,7 @@ var channel =member.guild.channels.find('name', 'wlc')
 if (!channel) return;
 channel.send({embed : embed});
 });
-client.on('message', message => {
 
-  if (message.content.startsWith( prefix + "rsug")) {
-  if (!message.channel.guild) return;
-  let args = message.content.split(" ").slice(1).join(' ');
-  client.users.get("370828320910213131").send(
-      "\n" + "**" + "● السيرفر :" + "**" +
-      "\n" + "**" + "» " + message.guild.name + "**" +
-      "\n" + "**" + " ● المرسل : " + "**" +
-      "\n" + "**" + "» " + message.author.tag + "**" +
-      "\n" + "**" + " ● الرسالة : " + "**" +
-      "\n" + "**" + args + "**")
-  }
-  });
-
-   client.on('message', message => {
-if (message.content.startsWith('rsug')){
-     let embed = new Discord.RichEmbed()
-  .setAuthor(message.author.username)
-  .setColor("random")
-  .addField("**  لقد تم ارسال رسالتك لصاحب البوت , وسوف يتطلع عليها قريباً انشاء الله  **")
-     
      
   message.channel.sendEmbed(embed);
     }
@@ -503,7 +482,7 @@ client.on('message', message => {
 const moment = require('moment');
     client.on('message', message => {
           if (message.content.startsWith("!.info")) {
-            if(!message.channel.guild) return message.reply('هذا الامر للسيرفرات فقط')
+            if(!message.channel.guild) return message.reply('only for server')
     var args = message.content.split(" ").slice(1);
     let user = message.mentions.users.first();
     var men = message.mentions.users.first();
@@ -743,4 +722,85 @@ if (message.content.startsWith("kick")) {
     message.channel.send("**تم طرد الشخص وتم ادراج رسالة طرد له في الخاص**: " + mention.tag);
 };
 });
+client.on('message', message => {
+    if (message.author.bot) return;
+     if (message.content === prefix + "A") {
+		 message.channel.send('**عزيزي , تم إرسال رسالة المساعدة في الخاص**');          
+	
+
+ message.author.sendMessage(`
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+**
+╔[❖══════════════════════❖]╗
+|  لــمعرفة تفاصيل السيرفر  |
+| ----    !.السـيرفر    ----|
+╚[❖══════════════════════❖]╝
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+╔[❖══════════════════════❖]╗
+| لمعرفة جميع رومات السيرفر |
+| ----    !.الرومات    ---- |
+╚[❖══════════════════════❖]╝
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+╔[❖══════════════════════❖]╗
+| لمعرفة معلوماتك بالسيـرفر |
+| ---    !.معلوماتي    ---- |
+╚[❖══════════════════════❖]╝
+╔[❖══════════════════════❖]╗
+| لمعرفة معلوماتك بالسيـرفر |
+| ---    !.ايمـــوجي   ---- |
+╚[❖══════════════════════❖]╝
+╔[❖══════════════════════❖]╗
+| لمعرفة سرعة اتصال البــوت |
+| ---    !.الســـرعة   ---- |
+╚[❖══════════════════════❖]╝
+╔[❖══════════════════════❖]╗
+| لإضافة البوت في السيــرفرك |
+| ---    !.دعوة   ---- |
+╚[❖══════════════════════❖]╝
+**
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+`);
+
+    }
+});
+client.on('message', message => {
+    if (message.author.bot) return;
+     if (message.content === prefix + "b") {
+		 message.channel.send('**عزيزي , تم إرسال رسالة المساعدة في الخاص**');          
+	
+
+ message.author.sendMessage(`
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+**
+╔[❖══════════════════════❖]╗
+|  لطرد شخـص مع ارسال السبب |
+| ----    !.طـــــرد    ----|
+╚[❖══════════════════════❖]╝
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+╔[❖══════════════════════❖]╗
+| لحظر شخـص مع ارسال السبب |
+| ----    !.حظـــر    ---- |
+╚[❖══════════════════════❖]╝
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+╔[❖══════════════════════❖]╗
+| لمسح عدد معين من الـرسائل |
+| ---    !.مســـــح    ---- |
+╚[❖══════════════════════❖]╝
+╔[❖════════════════════════❖]╗
+| لإغلاق الرومات وجعلها للمشرفين |
+| ---    !.اغلاق-الرومات   ---- |
+╚[❖══════════════════════❖]╝
+╔[❖══════════════════════❖]╗
+| إغلاق الرومات وجعلها للمشرفين |
+| ---    !.فتـح-الرومات   ---- |
+╚[❖══════════════════════❖]╝
+**
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+`);
+
+    }
+});
+
 client.login(process.env.BOT_TOKEN);
