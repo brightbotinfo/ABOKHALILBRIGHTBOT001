@@ -165,34 +165,27 @@ client.on('message', message => {
     }
 });
 
-client.on('message', message => {
-    if (message.author.bot) return;
-     if (message.content === prefix + "help-ar") {
-		 if(!message.channel.guild) return message.reply('**عزيزي , هذه الأوامر فقط للسيرفرات**');
-		 message.channel.send('**عزيزي , تم إرسال رسالة المساعدة في الخاص**');
-            
-	
-		 
-
-
- message.author.sendMessage(`
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
-**
-╔[❖══════════════════════❖]╗
-| A للأوامـر الـعامة إخـــتر |
-| B للأوامر المشرفين إختـــر |
-| C للأوامـــر الميـوزك إختر |
-| D للأوامر الــقران إخـــتر |
-| E لإضـــافة البـــوت  إختر |
-| F لمراسلة صاحب البوت إختر |
-╚[❖══════════════════════❖]╝
-**
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-`);
-
+client.on('message', msg => {
+  if (msg.content === '!.help') {
+  let embed = new Discord.RichEmbed()
+  .setAuthor(message.author.username)
+  .setColor("#9B59B6")
+  .addField("!.***help-ar*** == لرسالة المساعدة بالــلغة العربية")
+  .addField("!.***help-en*** == For help message in English")
+  .addField("╔[❖══════════════════════❖]╗")
+  .addField("| A للأوامـر الـعامة إخـــتر |")
+  .addField("| B للأوامر المشرفين إختـــر |")
+  .addField("| C للأوامر الميـوزك إختـــر |")
+  .addField("| D للأوامر الــقران إخـــتر |")
+  .addField("| E لإضافة البــــوت إخـــتر |")
+  .addField("| F لمراسلة صاحب البوت إختر |")
+  .addField(" :) شكراً لإستعمالك البوت")
+  
+  
+  message.channel.sendEmbed(embed);
     }
 });
+
 /////////////////////////////////////////
 
 client.on('message', msg => { 
