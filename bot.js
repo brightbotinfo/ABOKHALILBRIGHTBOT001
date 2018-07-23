@@ -81,7 +81,7 @@ client.on('message' , async (message) => {
 });
 
  client.on("message", message => {
-    if(message.content.startsWith(prefix + "server")) {
+    if(message.content.startsWith(prefix + "السيرفر")) {
         if(!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send("**ليس لديك الرتبة مطلوبة لإستخدام هذا الامر ❌**");
         const embed = new Discord.RichEmbed()
         .setAuthor(message.guild.name, message.guild.iconURL)
@@ -102,13 +102,16 @@ client.on('message' , async (message) => {
 
 client.on('message', msg => {
   if (msg.content === '!.help') {
-    msg.reply('!.***help-ar*** == لرسالة المساعدة بالــلغة العربية');
-  }
-});
-client.on('message', msg => {
-  if (msg.content === '!.help') {
-    msg.reply('!.***help-en*** == For help message in English');
-  }
+  let embed = new Discord.RichEmbed()
+  .setAuthor(message.author.username)
+  .setColor("#9B59B6")
+  .addField("!.***help-ar*** == لرسالة المساعدة بالــلغة العربية")
+  .addField("!.***help-en*** == For help message in English")
+  .addField(" :) شكراً لإستعمالك البوت")
+
+     
+  message.channel.sendEmbed(embed);
+    }
 });
 
 
@@ -116,7 +119,7 @@ client.on("message", message => {
       if (message.content === "!.السرعة") {
       const embed = new Discord.RichEmbed()
   .setColor("RANDOM")
-  .addField('**سرعة الإتصال هي:**' , `${Date.now() - message.createdTimestamp}` + ' ms')
+  .addField('** : سرعة الإتصال هي**' , `${Date.now() - message.createdTimestamp}` + ' ms')
   message.channel.sendEmbed(embed);
     }
 });
@@ -142,7 +145,7 @@ client.on('ready', function(){
 client.on('message', message => {
   if (true) {
 if (message.content === '!.invite') {
-      message.author.send('**تفضل رابط البوت يا غالي**').catch(e => console.log(e.stack));
+      message.author.send('**this is link bot**').catch(e => console.log(e.stack));
 	  message.author.send('https://goo.gl/XPU7pV').catch(e => console.log(e.stack));
     }
    }
@@ -173,40 +176,37 @@ client.on('message', message => {
 
 
  message.author.sendMessage(`
- **
-╔[❖════════════❖]╗
-   برفكس البوت = ' !. '
-╚[❖════════════❖]╝
-
-╔[❖════════════❖]╗
-   أوامر المشرفين
-╚[❖════════════❖]╝
- **
-<طرد**] < منشن الشخص > < قم بكتابة سبب طرده.!**]
-مسح**] لمسح مجموعة من الرسائل.!**]
-الرسالة-الجماعية**] <الرسالة> لإرسال رسالة جماعية.!**]
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
 **
-╔[❖════════════❖]╗
-   الأوامر العامة
-╚[❖════════════❖]╝
+╔[❖══════════════════════❖]╗
+| A للأوامـر الـعامة إخـــتر |
+| B للأوامر المشرفين إختـــر |
+| C للأوامـــر الميـوزك إختر |
+| D للأوامر الــقران إخـــتر |
+| E لإضـــافة البـــوت  إختر |
+| F لمراسلة صاحب البوت إختر |
+╚[❖══════════════════════❖]╝
 **
-معلومات**] لمعرفة بعض المعلومات عن السيرفر.!**]
- 
-السرعة**] لمعرفة سرعة خادم البوت.!**]
-**
-╔[❖═══════════════════════❖]╗
-   شكرا لكم لإستعمالكم البوت
-╚[❖═══════════════════════❖]╝
-**
-**رابط إضافة البوت**:  https://goo.gl/XPU7pV
-
-==================================================================
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 `);
 
     }
 });
 /////////////////////////////////////////
+
+client.on('message', msg => { 
+      if (msg.content.startsWith(`!.report`)) {
+         let args = msg.content.split(" ").slice(1);
+        if (!args[1]) return msg.reply(`يجب كتابه الاقتراح`)
+        if (msg.guild.channels.find('name', 'suggest')) {
+          msg.guild.channels.find('name', 'suggest').send(`
+        الاقتراح من : ${msg.member}
+        الاقتراح : **${args.join(" ").split(msg.mentions.members.first()).slice(' ')}**
+        `)
+        }
+      }
+      })
 
 client.on('message', message => {
     if (message.author.bot) return;
@@ -281,6 +281,43 @@ client.on("message", message => {
      
 }); 
 
+const Discord = require("discord.js");
+const client = new Discord.Client();
+const YTDL = require("ytdl-core");
+const prefix = '*';
+function play(connection, message) {
+    var server = servers[message.guild.id];
+    server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter: "audioonly"}));
+    server.queue.shift();
+    server.dispatcher.on("end", function() {
+        if(server.queue[0]) play(connection);
+        else connection.disconnect();
+    })
+}
+var servers = {};
+client.on('message' , async (message) => {
+       if(message.content.startsWith(prefix + "play")) {
+              let args = message.content.split(" ").slice(1);
+    //play
+    if (!args[0]) {
+         message.channel.send("Please specify a link");
+         return
+    }
+    if(!message.member.voiceChannel) {
+        message.channel.sned("I think it may work better if you are in a voice channel!");
+    }
+    if(!servers[message.guild.id]) servers[message.guild.id] = {
+        queue: []
+    }
+    var server = servers[message.guild.id];
+    server.queue.push(args[0]);
+    message.channel.send("Your song of choice is on the queue.` ")
+    if(!message.member.voiceConnection) message.member.voiceChannel.join().then(function(connection) {
+        play(connection, message);
+    })
+}
+
+});
 
  client.on("message", message => {
     if(message.content.startsWith(prefix + "server")) {
