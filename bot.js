@@ -1,9 +1,11 @@
+
 // 449421638199672852
 
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const prefix = '!.'
+const YTDL = require("ytdl-core");
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -274,10 +276,8 @@ client.on("message", message => {
      
 }); 
 
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const YTDL = require("ytdl-core");
-const prefix = '*';
+
+
 function play(connection, message) {
     var server = servers[message.guild.id];
     server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter: "audioonly"}));
@@ -362,24 +362,6 @@ client.on('message', message => {
 
 })
 
-client.on('guildMemberAdd', member => {
-    var embed = new Discord.RichEmbed()
-    .setAuthor(member.user.username, member.user.avatarURL)
-    .setThumbnail(member.user.avatarURL)
-    .setTitle(`رسالة`)
-    .setDescription(`اهلا وسهلا بك في السيرفر`)
-    .addField('انت العضو في السيرفر رقم:',`**[ ${member.guild.memberCount} ]**`,true)
-    .setColor('GREEN')
-
-var channel =member.guild.channels.find('name', 'wlc')
-if (!channel) return;
-channel.send({embed : embed});
-});
-
-     
-  message.channel.sendEmbed(embed);
-    }
-});
 client.on('message', message => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
@@ -588,7 +570,7 @@ if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('**You
          SEND_MESSAGES: true
 
            }).then(() => {
-               message.reply("the chat is open")
+              message.reply("the chat is open")
            });
              }
 
